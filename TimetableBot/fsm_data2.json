@@ -1,0 +1,14 @@
+{
+    "390959255": {
+        "390959255": {
+            "state": "MainMenuState:MM",
+            "data": {
+                "main_message_id": 20642,
+                "mes_to_del": [
+                    20645
+                ]
+            },
+            "bucket": {}
+        }
+    }
+}

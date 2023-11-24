@@ -1,0 +1,5 @@
+HELLO_MES = "hello_message"
+SET_LANGUAGE = "set_language"
+LANGUAGE_SELECTED = "language_selected"
+MAIN_MENU = "main_menu"
+BACK_TO_MM = "back_mm"
