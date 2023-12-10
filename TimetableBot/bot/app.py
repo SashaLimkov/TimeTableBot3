@@ -1,7 +1,7 @@
 from aiogram import Dispatcher
 from aiogram.utils import executor
 
-from .config.loader import dp
+from .config.loader import dp, scheduler
 from . import filters, handlers
 
 import os
@@ -9,10 +9,8 @@ import django
 import datetime
 
 
-# def scheduler_func():
-#     scheduler.add_job(sender_family_run, 'date', run_date=datetime.datetime(2023, 8, 4, 19, 0))
-#     scheduler.add_job(sender_solo_run, 'date', run_date=datetime.datetime(2023, 8, 4, 19, 0))
-#     scheduler.add_job(sender_streetball, 'date', run_date=datetime.datetime(2023, 8, 4, 19, 0))
+def scheduler_func():
+    scheduler.add_job(notifier, "cron", day_of_week="mon-sun", hour=8)
 
 
 def run_bot():

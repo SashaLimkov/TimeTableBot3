@@ -3,10 +3,34 @@
         "390959255": {
             "state": "MainMenuState:MM",
             "data": {
-                "main_message_id": 20642,
+                "main_message_id": 126,
                 "mes_to_del": [
-                    20645
-                ]
+                    20645,
+                    56,
+                    87
+                ],
+                "cd": {
+                    "@": "lvl_2",
+                    "action": "update_group_num",
+                    "action_2": "select_group"
+                }
+            },
+            "bucket": {}
+        }
+    },
+    "413257908": {
+        "413257908": {
+            "state": "MainMenuState:MM",
+            "data": {
+                "mes_to_del": [
+                    104
+                ],
+                "main_message_id": 136,
+                "cd": {
+                    "@": "lvl_2",
+                    "action": "update_group_num",
+                    "action_2": "select_group"
+                }
             },
             "bucket": {}
         }

@@ -75,9 +75,8 @@ async def main_menu(message: types.Message, state: FSMContext, back:bool = False
     await mw.try_edit_message(
         user_id=telegram_id,
         text=get_text(key=td.MAIN_MENU, lang=user.selected_language),
-        keyboard=await rk.main_menu(telegram_id=telegram_id),
+        keyboard=await ik.first_lvl(telegram_id=telegram_id, buttons_list=ld.MAIN_MENU),
         state=state,
-        main_message_id=main_message_id,
     )
 
 
