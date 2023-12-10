@@ -6,8 +6,10 @@ from bot.states.Language import LanguageState
 from bot.data import text_data as td
 from bot.data import list_data as ld
 from aiogram import types
+
 # from bot.data import callback_data as cd
 from . import commands, reply_splitter, user_functions
+
 
 def setup(dp: Dispatcher):
     dp.register_message_handler(
@@ -35,13 +37,8 @@ def setup(dp: Dispatcher):
     )
 
     dp.register_callback_query_handler(
-        commands.back_to_mm,
-        filters.Text(td.BACK_TO_MM),
-        state="*"
+        commands.back_to_mm, filters.Text(td.BACK_TO_MM), state="*"
     )
     user_functions.setup(dp=dp)
 
-    dp.register_callback_query_handler(
-        reply_splitter.in_dev,
-        state="*"
-    )
+    dp.register_callback_query_handler(reply_splitter.in_dev, state="*")

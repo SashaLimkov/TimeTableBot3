@@ -9,9 +9,7 @@ from bot.config.loader import bot
 from bot.utils.deleter import try_delete_message
 
 
-async def try_edit_message(
-    user_id, text, keyboard, state: FSMContext
-):
+async def try_edit_message(user_id, text, keyboard, state: FSMContext):
     """
     Функция, которая пытается обновить любое текстовое сообщение по main_message_id.
     :param message:
@@ -30,14 +28,14 @@ async def try_edit_message(
                 text=text,
                 message_id=main_message_id,
                 reply_markup=keyboard,
-                disable_web_page_preview=True
+                disable_web_page_preview=True,
             )
         else:
             await bot.edit_message_text(
                 chat_id=user_id,
                 text=text,
                 message_id=main_message_id,
-                disable_web_page_preview=True
+                disable_web_page_preview=True,
             )
     except Exception:
         await try_send_message(user_id, text, keyboard, state)
@@ -78,7 +76,10 @@ async def try_send_message(user_id, text, keyboard, state: FSMContext = {}):
     try:
         if keyboard:
             mes = await bot.send_message(
-                chat_id=user_id, text=text, reply_markup=keyboard, disable_web_page_preview=True
+                chat_id=user_id,
+                text=text,
+                reply_markup=keyboard,
+                disable_web_page_preview=True,
             )
         else:
             mes = await bot.send_message(
@@ -101,7 +102,11 @@ async def try_send_message(user_id, text, keyboard, state: FSMContext = {}):
 
 
 async def try_send_doc(
-    user_id, text, keyboard, state: FSMContext = {}, file=None,
+    user_id,
+    text,
+    keyboard,
+    state: FSMContext = {},
+    file=None,
 ):
     """Функция, которая пытается отправить любое текстовое сообщение.
     С учетом main_message_id для дальнейшего его обновления.
@@ -142,6 +147,7 @@ async def try_send_doc(
                 return mes.message_id
         except:
             print(traceback.format_exc())
+
 
 async def try_edit_keyboard(chat_id: int, message_id: int, keyboard):
     try:
