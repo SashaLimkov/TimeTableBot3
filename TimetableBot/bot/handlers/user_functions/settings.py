@@ -26,5 +26,5 @@ async def switch_notifications(call: types.CallbackQuery, state=FSMContext):
     await mw.try_edit_keyboard(
         chat_id=telegram_id,
         message_id=data.get("main_message_id"),
-        keyboard= await ik.first_lvl(telegram_id=telegram_id, buttons_list=ld.MAIN_MENU)
+        keyboard=await ik.first_lvl(telegram_id=telegram_id, buttons_list=ld.MAIN_MENU),
     )

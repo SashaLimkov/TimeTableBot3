@@ -13,8 +13,9 @@ __all__ = [
     "third_lvl",
     "weekday",
     "weekday_selected",
-    "is_odd_selected"
+    "is_odd_selected",
 ]
+
 
 async def back_to_mm(telegram_id):
     keyboard = await get_base_keyboard(
@@ -26,13 +27,13 @@ async def back_to_mm(telegram_id):
     keyboard.add(
         await get_inline_button(
             text=get_text(key=td.BACK_TO_MM, lang=user.selected_language),
-            cd=td.BACK_TO_MM
+            cd=td.BACK_TO_MM,
         )
     )
     return keyboard
 
 
-async def first_lvl(telegram_id, buttons_list: tuple|None):
+async def first_lvl(telegram_id, buttons_list: tuple | None):
     keyboard = await get_base_keyboard(
         keyboard_options={
             "row_width": 1,
@@ -44,22 +45,23 @@ async def first_lvl(telegram_id, buttons_list: tuple|None):
             if key == td.TURN_OFF_ON_NOTIFICATIONS:
                 keyboard.add(
                     await get_inline_button(
-                        text=get_text(key=key, lang=user.selected_language).format("✅" if user.notifications else "❌"),
-                        cd=key
+                        text=get_text(key=key, lang=user.selected_language).format(
+                            "✅" if user.notifications else "❌"
+                        ),
+                        cd=key,
                     )
                 )
                 continue
             keyboard.add(
                 await get_inline_button(
                     text=get_text(key=key, lang=user.selected_language),
-                    cd=cd.LVL_1.new(
-                        action=key
-                    )
+                    cd=cd.LVL_1.new(action=key),
                 )
             )
     return keyboard
 
-async def second_lvl(telegram_id, buttons_list: tuple|None, callback_data:dict):
+
+async def second_lvl(telegram_id, buttons_list: tuple | None, callback_data: dict):
     keyboard = await get_base_keyboard(
         keyboard_options={
             "row_width": 1,
@@ -71,21 +73,19 @@ async def second_lvl(telegram_id, buttons_list: tuple|None, callback_data:dict):
             keyboard.add(
                 await get_inline_button(
                     text=get_text(key=key, lang=user.selected_language),
-                    cd=cd.LVL_2.new(
-                        action=callback_data["action"],
-                        action_2=key
-                    )
+                    cd=cd.LVL_2.new(action=callback_data["action"], action_2=key),
                 )
             )
     keyboard.add(
         await get_inline_button(
-                    text=get_text(key=td.BACK_TO_MM, lang=user.selected_language),
-                    cd=td.BACK_TO_MM
-                )
+            text=get_text(key=td.BACK_TO_MM, lang=user.selected_language),
+            cd=td.BACK_TO_MM,
+        )
     )
     return keyboard
 
-async def third_lvl(telegram_id, buttons_list: tuple|None, callback_data:dict):
+
+async def third_lvl(telegram_id, buttons_list: tuple | None, callback_data: dict):
     keyboard = await get_base_keyboard(
         keyboard_options={
             "row_width": 1,
@@ -100,13 +100,14 @@ async def third_lvl(telegram_id, buttons_list: tuple|None, callback_data:dict):
                     cd=cd.LVL_3.new(
                         action=callback_data["action"],
                         action_2=callback_data["action_2"],
-                        action_3=key
-                    )
+                        action_3=key,
+                    ),
                 )
             )
     return keyboard
 
-async def weekday(telegram_id, callback_data:dict):
+
+async def weekday(telegram_id, callback_data: dict):
     keyboard = await get_base_keyboard(
         keyboard_options={
             "row_width": 2,
@@ -116,23 +117,19 @@ async def weekday(telegram_id, callback_data:dict):
     for key in ld.WEEKDAY_NAMES:
         keyboard.insert(
             await get_inline_button(
-                text=key,
-                cd=cd.WEEKDAY.new(
-                    action=callback_data["action"],
-                    day=key
-                )
+                text=key, cd=cd.WEEKDAY.new(action=callback_data["action"], day=key)
             )
         )
     keyboard.add(
         await get_inline_button(
-                    text=get_text(key=td.BACK_TO_MM, lang=user.selected_language),
-                    cd=td.BACK_TO_MM
-                )
+            text=get_text(key=td.BACK_TO_MM, lang=user.selected_language),
+            cd=td.BACK_TO_MM,
+        )
     )
     return keyboard
 
 
-async def weekday_selected(telegram_id, callback_data:dict):
+async def weekday_selected(telegram_id, callback_data: dict):
     keyboard = await get_base_keyboard(
         keyboard_options={
             "row_width": 1,
@@ -146,22 +143,22 @@ async def weekday_selected(telegram_id, callback_data:dict):
                 cd=cd.WEEKDAY_OE.new(
                     action=callback_data["action"],
                     day=callback_data["day"],
-                    is_odd=0 if key == "Четная" else 1
-                )
+                    is_odd=0 if key == "Четная" else 1,
+                ),
             )
         )
     keyboard.add(
-                await get_inline_button(
-                    text=get_text(key=td.BACK, lang=user.selected_language),
-                    cd=cd.LVL_1.new(
-                        action=callback_data["action"],
-                    )
-                )
-            )
+        await get_inline_button(
+            text=get_text(key=td.BACK, lang=user.selected_language),
+            cd=cd.LVL_1.new(
+                action=callback_data["action"],
+            ),
+        )
+    )
     return keyboard
 
 
-async def is_odd_selected(telegram_id, callback_data:dict):
+async def is_odd_selected(telegram_id, callback_data: dict):
     keyboard = await get_base_keyboard(
         keyboard_options={
             "row_width": 1,
@@ -169,12 +166,9 @@ async def is_odd_selected(telegram_id, callback_data:dict):
     )
     user = tus.get_profile_by_telegram_id(telegram_id=telegram_id)
     keyboard.add(
-                await get_inline_button(
-                    text=get_text(key=td.BACK, lang=user.selected_language),
-                    cd=cd.WEEKDAY.new(
-                        action=callback_data["action"],
-                        day=callback_data["day"]
-                    )
-                )
-            )
+        await get_inline_button(
+            text=get_text(key=td.BACK, lang=user.selected_language),
+            cd=cd.WEEKDAY.new(action=callback_data["action"], day=callback_data["day"]),
+        )
+    )
     return keyboard

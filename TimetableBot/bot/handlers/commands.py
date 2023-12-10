@@ -14,6 +14,7 @@ from bot.keyboards import inline as ik
 from bot.utils import message_worker as mw
 from bot.utils.deleter import try_delete_message
 
+
 async def new_user(message: types.Message, state: FSMContext):
     telegram_id = message.chat.id
     full_name = message.from_user.full_name
@@ -21,11 +22,13 @@ async def new_user(message: types.Message, state: FSMContext):
     await message.reply(
         text=get_text(key=td.HELLO_MES, lang=default_language), reply=False
     )
-    tus.create_user(telegram_id=telegram_id, full_name=full_name, language=default_language)
+    tus.create_user(
+        telegram_id=telegram_id, full_name=full_name, language=default_language
+    )
     await select_language(message=message, state=state)
-    
 
-async def select_language(message: types.Message, state:FSMContext):
+
+async def select_language(message: types.Message, state: FSMContext):
     telegram_id = message.chat.id
     data = await state.get_data()
     mes_to_del = data.get("mes_to_del", [])
@@ -33,11 +36,11 @@ async def select_language(message: types.Message, state:FSMContext):
     mes = await message.reply(
         text=get_text(key=td.SET_LANGUAGE, lang=user.selected_language),
         reply_markup=await rk.select_language(),
-        reply=False
+        reply=False,
     )
     await message.delete()
     mes_to_del.append(mes.message_id)
-    await state.update_data({"mes_to_del":mes_to_del})
+    await state.update_data({"mes_to_del": mes_to_del})
     await LanguageState.SELECTING.set()
 
 
@@ -56,6 +59,7 @@ async def set_language(message: types.Message, state: FSMContext):
     await try_delete_message(chat_id=telegram_id, message_id=mes_to_del)
     await main_menu(message=message, state=state)
 
+
 async def old_user(message: types.Message, state: FSMContext):
     await main_menu(message=message, state=state)
 
@@ -64,7 +68,7 @@ async def back_to_mm(call: types.CallbackQuery, state: FSMContext):
     await main_menu(message=call.message, state=state, back=True)
 
 
-async def main_menu(message: types.Message, state: FSMContext, back:bool = False):
+async def main_menu(message: types.Message, state: FSMContext, back: bool = False):
     telegram_id = message.chat.id
     if not back:
         await message.delete()
@@ -80,5 +84,5 @@ async def main_menu(message: types.Message, state: FSMContext, back:bool = False
     )
 
 
-async def test(message:types.Message, state: FSMContext):
+async def test(message: types.Message, state: FSMContext):
     print(123)
