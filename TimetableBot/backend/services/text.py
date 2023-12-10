@@ -1,3 +1,6 @@
+import json
+import os
+from TimetableBot.settings import BASE_DIR
 from backend.models import Text
 
 
@@ -31,3 +34,30 @@ def get_all_languages():
 
 def get_language_by_name(lang_name: str) -> Text.Language:
     return Text.Language.objects.filter(name=lang_name).first()
+
+
+def create_data_json():
+    data = {}
+    for text_key in Text.Text.objects.all():
+        name = text_key.key
+        ru_l = Text.Language.objects.filter(name="Русский язык").first()
+        rus_translate = text_key.all_translates.filter(language=ru_l).first().translate
+        data.update({
+            name:{
+                "Русский язык":rus_translate
+            }
+        })
+    with open('text_result.json', 'w') as fp:
+        json.dump(data, fp)
+
+def fill_text():
+    f = open(os.path.join(BASE_DIR, 'text_result.json'))
+    data = json.load(f)
+    for k, v in data.items():
+        t = Text.objects.create(key=k)
+        t.save()
+        for lang_code, text in v.items():
+            lang = get_language_by_name(lang_name=lang_code)
+            r = Text.Translate.objects.create(text_key=t, language=lang, translate=text)
+            r.save()
+
