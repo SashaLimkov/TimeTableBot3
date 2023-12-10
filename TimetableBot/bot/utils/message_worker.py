@@ -10,18 +10,19 @@ from bot.utils.deleter import try_delete_message
 
 
 async def try_edit_message(
-    user_id, text, main_message_id, keyboard, state: FSMContext
+    user_id, text, keyboard, state: FSMContext
 ):
     """
     Функция, которая пытается обновить любое текстовое сообщение по main_message_id.
     :param message:
     :param user_id:
     :param text:
-    :param main_message_id:
     :param keyboard:
     :param state:
     :return:
     """
+    data = await state.get_data()
+    main_message_id = data.get("main_message_id")
     try:
         if keyboard:
             await bot.edit_message_text(
@@ -169,10 +170,8 @@ async def spam_machine(text, chats):
 
 async def dry_message_editor(text, keyboard, state, message):
     data = await state.get_data()
-    main_message_id = data.get("main_message_id", False)
     telegram_id = message.chat.id
     await try_edit_message(
-        main_message_id=main_message_id,
         user_id=telegram_id,
         text=text,
         keyboard=keyboard,
