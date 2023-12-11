@@ -1,0 +1,22 @@
+version: '4.26'
+services:
+  web:
+    build:
+      context: ./
+    command: >
+      /bin/sh -c "python TimetableBot/manage.py makemigrations && python TimetableBot/manage.py migrate && python TimetableBot/manage.py runserver 172.20.0.3:8000 ; exit 0"
+
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: "timetablebot"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
